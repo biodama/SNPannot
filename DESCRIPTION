@@ -6,6 +6,6 @@ Author: BIODAMA
 Maintainer: The package maintainer <biodama.cne@isciii.es>
 Description: The SNPannot package performs SNP-like genetic marker annotation using NCBI Gene and dbSNP repositories as well as Gene Ontology Resource.
 License: GPL-License
-Encoding: UTF-8
+Encoding: UTF-8 
 url: https://github.com/biodama/SNPannot
 BugReports: https://github.com/biodama/SNPannot/issues
