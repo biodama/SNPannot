@@ -18,7 +18,10 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-SNPannot is a package designed to perform an annotation of single nucleotide polymorphisms.
+SNPannot is a package designed to perform an annotation of single nucleotide polymorphisms. 
+<br />
+<br />
+This package has been developed in the context of the CIBERESP Strategic Subprogram Genrisk (https://cancer.genrisk.org/en/).
 
 ## Installation
 

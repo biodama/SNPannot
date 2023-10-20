@@ -7,7 +7,9 @@
 <!-- badges: end -->
 
 SNPannot is a package designed to perform an annotation of single
-nucleotide polymorphisms.
+nucleotide polymorphisms. <br /> <br /> This package has been developed
+in the context of the CIBERESP Strategic Subprogram Genrisk
+(<https://cancer.genrisk.org/en/>).
 
 ## Installation
 
@@ -21,10 +23,11 @@ devtools::install_github("biodama/SNPannot")
 
 ## Example 1
 
-This is a basic example which shows you how to load the library an use
+This is a basic example which shows you how to load the function an use
 dbSNP_info.
 
 ``` r
+
 library(SNPannot)
 
 temp <- data.table::fread("https://ftp.ebi.ac.uk/pub/databases/spot/pgs/scores/PGS000146/ScoringFiles/Harmonized/PGS000146_hmPOS_GRCh37.txt.gz",skip=19)
@@ -42,7 +45,7 @@ res_par<-dbSNP_info(dat=temp[,1],type="rs",p=TRUE,build=37,r2=0.99,pop="EUR")
 
 ## Example 2
 
-This is a basic example which shows you how to load the library an use
+This is a basic example which shows you how to load the function an use
 snp_gene.
 
 ``` r
