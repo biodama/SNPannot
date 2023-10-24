@@ -26,16 +26,16 @@ devtools::install_github("biodama/SNPannot")
 This set of functions in package accesses data from:
 
 - **NCBI’s dbSNP SNP database**
-  - See [](https://www.ncbi.nlm.nih.gov/snp/) for more details.
+  - See [dbSNP](https://www.ncbi.nlm.nih.gov/snp/) for more details.
   - Function: **dbSNP_info()**
 - **Ensembl genome database**
-  - See [](https://www.ensembl.org/index.html) for more details.
+  - See [Ensemble](https://www.ensembl.org/index.html) for more details.
   - Function: **dbSNP_info()**
 - **NCBI’s dbSNP Gene database**
-  - See [](https://www.ncbi.nlm.nih.gov/gene/) for more details.
+  - See [Gene](https://www.ncbi.nlm.nih.gov/gene/) for more details.
   - Function: **snp_gene()**
 - **Ontology Resource**
-  - See [](http://geneontology.org/) for more details.
+  - See [GO](http://geneontology.org/) for more details.
   - Function: **snp_gene()**
   - Require packages: **ontologyIndex** , **ontologySimilarity**
 
@@ -782,7 +782,7 @@ rs1321311;rs59148954
 6:36655123
 </td>
 <td style="text-align:center;">
-rs9918353;rs9470358
+rs9470358;rs9918353
 </td>
 </tr>
 <tr>
