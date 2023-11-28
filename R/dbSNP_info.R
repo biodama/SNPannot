@@ -8,7 +8,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
   }
   else {
     snp_info <- function(dat, build, type, r2, pop) {
-      dat <- as.data.frame(dat)
+      dat <- as.data.frame(dat, stringsAsFactors =F)
       if (type == "pos") {
         if (length(grep(":", dat[1, ])) == 0) {
           stop("ERROR: INTRODUCE THE POSITION DATA SEPARATE WITH : AND WITHOUT CHR")
@@ -56,7 +56,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
       if (length(info) == 1) {
         table_info <- data.frame(term = dat[1, ], rsID = "",
                                  gene = "", func = "", GRCh37 = "", GRCh38 = "",
-                                 rs_ld = "")
+                                 rs_ld = "", stringsAsFactors =F)
         table_info
       }
       else {
@@ -142,7 +142,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
                                      0, 1, 0)
               res_snps[[i]] <- data.frame(rsID = rs,
                                           gene = paste(gene, collapse = ";"), func = functional,
-                                          GRCh37 = chr_pos_37, GRCh38 = chr_pos_38)
+                                          GRCh37 = chr_pos_37, GRCh38 = chr_pos_38, stringsAsFactors =F)
               rm(check3, rs, gene, chr_pos_37, chr_pos_38)
             }
             table_info <- plyr::ldply(res_snps)
@@ -204,7 +204,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
                                    0, 1, 0)
             table_info <- data.frame(rsID = rs, gene = paste(gene,
                                                              collapse = ";"), func = functional, GRCh37 = chr_pos_37,
-                                     GRCh38 = chr_pos_38)
+                                     GRCh38 = chr_pos_38, stringsAsFactors =F)
             rm(check3, chr_pos_37, chr_pos_38)
           }
         }
@@ -251,7 +251,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
           }
           table_info <- data.frame(term = check, rsID = snp2,
                                    gene = gene2, func = func2, GRCh37 = check,
-                                   GRCh38 = pos38)
+                                   GRCh38 = pos38, stringsAsFactors =F)
         }
         else {
           if (type == "pos" & build == 38) {
@@ -295,7 +295,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
             }
             table_info <- data.frame(term = check, rsID = snp2,
                                      gene = gene2, func = func2, GRCh37 = pos37,
-                                     GRCh38 = check)
+                                     GRCh38 = check, stringsAsFactors =F)
           }
           else {
             if (length(setdiff(table_info$GRCh37, table_info$GRCh37[1])) ==
@@ -345,7 +345,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
             }
             table_info <- data.frame(term = check, rsID = snp2,
                                      gene = gene2, func = func2, GRCh37 = pos37,
-                                     GRCh38 = pos38)
+                                     GRCh38 = pos38, stringsAsFactors =F)
           }
         }
         table_info

@@ -37,6 +37,19 @@ The window size is set by default to 500 kb when searching for variants in LD
 
 }
 
+\value{
+A dataframe that returns the following values:
+
+\item{term}{Entered term to annotate}
+\item{rsID}{Alternative names of the SNP}
+\item{gene}{Gene to which it belongs}
+\item{func}{Functional consequences. If the value returned is 1, it is an intron-variant}
+\item{GRCh37,GRCh38}{Chromosome position in Build 37 and Build 38}
+\item{rs_ld}{SNP in linkage disequilibrium}
+
+
+}
+
 \examples{
 
 library(SNPannot)
@@ -49,7 +62,9 @@ head(temp)
 res_loop<-dbSNP_info(dat=temp[,1],type="rs",p=FALSE,build=37,r2=0.99,pop="EUR")
 head(res_loop)
 
-  #Parallel
+#####################
+#Parallel
+#####################
 
 res_par<-dbSNP_info(dat=temp[,1],type="rs",p=TRUE,build=37,r2=0.99,pop="EUR")
 head(res_par)
