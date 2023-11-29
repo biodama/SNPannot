@@ -39,10 +39,10 @@ This set of functions in package accesses data from:
 
 ### **dbSNP_info()**
 
-Searches the dbSNP database belonging to NCBI and Ensembl genome browser
-in order to annotate the genes belonging to that SNP. According to the
-SNP name or position, the function annotates the GRCh37, GRCh38 and also
-SNPs in linkage disequilibrium (LD).
+Searches the dbSNP database belonging to NCBI in order to annotate the
+genes belonging to that SNP. According to the SNP name or position, the
+function annotates the GRCh37, GRCh38 and also SNPs in linkage
+disequilibrium (LD).
 
 ``` r
 library(SNPannot)
@@ -778,7 +778,7 @@ rs1321311;rs59148954
 6:36655123
 </td>
 <td style="text-align:center;">
-rs9470358;rs9918353
+rs9918353;rs9470358
 </td>
 </tr>
 <tr>

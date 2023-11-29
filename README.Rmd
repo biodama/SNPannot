@@ -76,7 +76,7 @@ This set of functions in package accesses data from:
   
 ## Example 1
 ### **dbSNP_info()**
-Searches the dbSNP database belonging to NCBI and Ensembl genome browser in order to annotate the genes belonging to that SNP. According to the SNP name or position, the function annotates the GRCh37, GRCh38 and also SNPs in linkage disequilibrium (LD).
+Searches the dbSNP database belonging to NCBI in order to annotate the genes belonging to that SNP. According to the SNP name or position, the function annotates the GRCh37, GRCh38 and also SNPs in linkage disequilibrium (LD).
 
 ```{r, eval=T,tidy=TRUE, tidy.opts=list(arrow=TRUE, indent=2)}
 library(SNPannot)
