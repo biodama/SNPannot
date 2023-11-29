@@ -1,7 +1,7 @@
 Package: SNPannot
 Type: Package
 Title: Annotation of Single-nucleotide polymorphism markers.
-Version: 1.0.9
+Version: 1.1.0
 Author: BIODAMA 
 Maintainer: The package maintainer <biodama.cne@isciii.es>
 Description: The SNPannot package performs SNP-like genetic marker annotation using NCBI Gene and dbSNP repositories as well as Gene Ontology Resource.

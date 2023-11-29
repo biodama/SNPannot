@@ -3,10 +3,7 @@
 \title{snp_gene}
 
 \description{
-snp_gene() searches NCBI Gene database and Gene Ontology Resource in order to obtain relevant and specific information about the entered genes.
-
-
-
+\bold{snp_gene()} performs an annotation of a given list of genes searching information in dbSNP database belonging to NCBI
 }
 \usage{
 
@@ -19,25 +16,23 @@ p=F
 }
 \arguments{
 
-\item{dat}{The data to be searched in Gene. There are three options:
-If NULL, the default, the function gives an error.
-A data.frame with the values to be searched.}
+\item{dat}{there are three options: the result obtained using dbSNP_info function or a character vector containing gene HGNC name or gene entrezid identifier}
 
-\item{term}{Argument indicating the type of data to be entered into the function. There are three options:
+\item{term}{argument indicating the type of data to be entered into the function. There are three options:
 
-  Item "info" the search is performed with the genes obtained by applying the function dbSNP_info().
+  - "info" the search is performed with the genes obtained by applying the function dbSNP_info()
 
-  Item "hgnc" the search is performed with the HGN nomenclature.
+  - "hgnc" the search is performed with the HGN nomenclature
 
-  Item "entrezid" the search is performed with the ID gene.}
+  - "entrezid" the search is performed with the ID gene}
 
-\item{p}{Parallelization. If is FALSE, the default, the search is carried out without parallelisation. If TRUE, the function parallelises the searches.}
+\item{p}{Parallelization. If is FALSE (default), the search is carried out without parallelisation. If TRUE, the function parallelises the searches.}
 
 }
 
 \value{
 
-A dataframe that returns the following values:
+a dataframe containing the following values:
 
 \item{term}{Entered term to search info}
 \item{hgnc}{Name provided by HGNC}

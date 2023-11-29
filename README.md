@@ -28,16 +28,12 @@ This set of functions in package accesses data from:
 - **NCBI’s dbSNP SNP database**
   - See [dbSNP](https://www.ncbi.nlm.nih.gov/snp/) for more details.
   - Function: **dbSNP_info()**
-- **Ensembl genome database**
-  - See [Ensemble](https://www.ensembl.org/index.html) for more details.
-  - Function: **dbSNP_info()**
 - **NCBI’s dbSNP Gene database**
   - See [Gene](https://www.ncbi.nlm.nih.gov/gene/) for more details.
   - Function: **snp_gene()**
 - **Ontology Resource**
   - See [GO](http://geneontology.org/) for more details.
   - Function: **snp_gene()**
-  - Require packages: **ontologyIndex** , **ontologySimilarity**
 
 ## Example 1
 

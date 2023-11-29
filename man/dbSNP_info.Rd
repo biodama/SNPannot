@@ -3,8 +3,7 @@
 \title{dbSNP_info}
 \description{
 
-  dbSNP_info() searches the dbSNP database belonging to NCBI and Ensembl genome browser in order to annotate the genes belonging to that SNP according to their name or position in build loci 37 or build loci 38 and also SNP in linkage disequilibrium (LD).
-
+\item{dbSNP_info()}{performs an annotation of a given list of SNPs searching information in dbSNP database belonging to NCBI}
 }
 
 \usage{
@@ -20,14 +19,12 @@ dbSNP_info(
 
 }
 \arguments{
-\item{dat}{The data to be searched in dbSNP. There are three options:
-If NULL, the default, the function gives an error.
-A data.frame with the values to be searched.}
-\item{type}{Argument indicating the type of data to be entered into the function. If "pos" the search is performed by chromosome (1, 2, ..., 22, X, Y, MT):position. If is "rs" the search is performed by SNP name.}
-\item{p}{Parallelization. If is FALSE, the default, the search is carried out without parallelisation. If TRUE, the function parallelises the searches.}
-\item{build}{Build in which to search. If is 37, the default, the search is performed by build loci 37. If 38, the search is performed by build loci 38.}
-\item{r2}{Squared Pearson correlation coefficient when searching for variants in LD. Default = 0.99}
-\item{pop}{Population to use as reference panel when searching for variants in LD. Default = "EUR"}
+\item{dat}{character vector containing rsIDs (E.g: rs647161) or chr:positions (E.g.: 5:134499092) of the SNPs to be searched}
+\item{type}{argument indicating the type of data to be entered into the function. If "pos" the search is performed by chromosome (1, 2, ..., 22, X, Y, MT):position. If is "rs" the search is performed by SNP name.}
+\item{p}{Parallelization. If is FALSE (default) the search is carried out without parallelisation. If TRUE, the function parallelises the searches}
+\item{build}{If is 37 (default), the search is performed by build loci 37. If 38, the search is performed by build loci 38}
+\item{r2}{squared Pearson correlation coefficient when searching for variants in LD. Default = 0.99}
+\item{pop}{population to use as reference panel when searching for variants in LD. Default = "EUR"}
 }
 
 
@@ -38,14 +35,14 @@ The window size is set by default to 500 kb when searching for variants in LD
 }
 
 \value{
-A dataframe that returns the following values:
+a dataframe containing the following values:
 
 \item{term}{Entered term to annotate}
 \item{rsID}{Alternative names of the SNP}
 \item{gene}{Gene to which it belongs}
-\item{func}{Functional consequences. If the value returned is 1, it is an intron-variant}
+\item{func}{Functional consequences. If the value returned is 1, it is an intergenic-variant}
 \item{GRCh37,GRCh38}{Chromosome position in Build 37 and Build 38}
-\item{rs_ld}{SNP in linkage disequilibrium}
+\item{rs_ld}{SNPs in linkage disequilibrium}
 
 
 }

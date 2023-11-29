@@ -7,8 +7,17 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
     stop("ERROR: INTRODUCE dat AND type TERMS")
   }
   else {
+    pack<-c("R.utils","plyr","parallel","svMisc","httr","jsonlite","xml2")
+    for(pck in pack){
+      if (!require(pck,character.only=T)) {
+        install.packages(pck, type="source", dep=T, repos = "https://cran.r-project.org")
+        library(pck,character.only=T)
+      }else{
+        library(pck,character.only=T)
+      }
+    }
     snp_info <- function(dat, build, type, r2, pop) {
-      dat <- as.data.frame(dat, stringsAsFactors =F)
+      dat <- as.data.frame(dat, stringsAsFactors = F)
       if (type == "pos") {
         if (length(grep(":", dat[1, ])) == 0) {
           stop("ERROR: INTRODUCE THE POSITION DATA SEPARATE WITH : AND WITHOUT CHR")
@@ -56,7 +65,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
       if (length(info) == 1) {
         table_info <- data.frame(term = dat[1, ], rsID = "",
                                  gene = "", func = "", GRCh37 = "", GRCh38 = "",
-                                 rs_ld = "", stringsAsFactors =F)
+                                 rs_ld = "", stringsAsFactors = F)
         table_info
       }
       else {
@@ -137,12 +146,13 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
               }
               check_functional <- info[grep("Functional Consequence",
                                             info)][i]
-              functional <- grep("intergenic", tolower(check_functional))
-              functional <- ifelse(length(functional) ==
-                                     0, 1, 0)
+
+              functional <- ifelse(length(check_functional) ==
+                                     0, 0, 1)
               res_snps[[i]] <- data.frame(rsID = rs,
                                           gene = paste(gene, collapse = ";"), func = functional,
-                                          GRCh37 = chr_pos_37, GRCh38 = chr_pos_38, stringsAsFactors =F)
+                                          GRCh37 = chr_pos_37, GRCh38 = chr_pos_38,
+                                          stringsAsFactors = F)
               rm(check3, rs, gene, chr_pos_37, chr_pos_38)
             }
             table_info <- plyr::ldply(res_snps)
@@ -199,12 +209,11 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
             }
             check_functional <- info[grep("Functional Consequence",
                                           info)]
-            functional <- grep("intergenic", tolower(check_functional))
-            functional <- ifelse(length(functional) ==
-                                   0, 1, 0)
+
+            functional <- ifelse(length(check_functional) == 0, 0, 1)
             table_info <- data.frame(rsID = rs, gene = paste(gene,
                                                              collapse = ";"), func = functional, GRCh37 = chr_pos_37,
-                                     GRCh38 = chr_pos_38, stringsAsFactors =F)
+                                     GRCh38 = chr_pos_38, stringsAsFactors = F)
             rm(check3, chr_pos_37, chr_pos_38)
           }
         }
@@ -251,7 +260,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
           }
           table_info <- data.frame(term = check, rsID = snp2,
                                    gene = gene2, func = func2, GRCh37 = check,
-                                   GRCh38 = pos38, stringsAsFactors =F)
+                                   GRCh38 = pos38, stringsAsFactors = F)
         }
         else {
           if (type == "pos" & build == 38) {
@@ -295,7 +304,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
             }
             table_info <- data.frame(term = check, rsID = snp2,
                                      gene = gene2, func = func2, GRCh37 = pos37,
-                                     GRCh38 = check, stringsAsFactors =F)
+                                     GRCh38 = check, stringsAsFactors = F)
           }
           else {
             if (length(setdiff(table_info$GRCh37, table_info$GRCh37[1])) ==
@@ -345,7 +354,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
             }
             table_info <- data.frame(term = check, rsID = snp2,
                                      gene = gene2, func = func2, GRCh37 = pos37,
-                                     GRCh38 = pos38, stringsAsFactors =F)
+                                     GRCh38 = pos38, stringsAsFactors = F)
           }
         }
         table_info
@@ -363,32 +372,25 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
           ensembl_get <- try(GET(paste("https://rest.ensembl.org/ld/human/",
                                        snp, "/1000GENOMES:phase_3:", pop, sep = ""),
                                  content_type("application/json")))
-
-          status_time0<-Sys.time()
-          if(ensembl_get$status_code != 200){
-
-            while (ensembl_get$status_code != 200 | difftime(Sys.time(),status_time0,units="secs")<=10){
-
+          status_time0 <- Sys.time()
+          if (ensembl_get$status_code != 200) {
+            while (ensembl_get$status_code != 200 | difftime(Sys.time(),
+                                                             status_time0, units = "secs") <= 10) {
               ensembl_get <- try(GET(paste("https://rest.ensembl.org/ld/human/",
                                            snp, "/1000GENOMES:phase_3:", pop, sep = ""),
                                      content_type("application/json")))
-
             }
           }
-          if(ensembl_get$status_code != 200) {
-            rs_ld <- http_status(ensembl_get$status_code)$"category"
+          if (ensembl_get$status_code != 200) {
+            rs_ld <- http_status(ensembl_get$status_code)$category
           }
-
-          if(ensembl_get$status_code == 200){
+          if (ensembl_get$status_code == 200) {
             stop_for_status(ensembl_get)
             table_ld <- fromJSON(toJSON(content(ensembl_get)))
             rs_ld <- unlist(table_ld$variation2[table_ld$r2 >=
                                                   r2])
             rs_ld
-
           }
-
-
         }
         res <- sapply(1:length(check), function(i) ld_search(snp = check[i],
                                                              r2 = r2, pop = pop))
@@ -428,6 +430,3 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
   }
   res_final
 }
-
-
-
