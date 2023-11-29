@@ -3,7 +3,7 @@
 \title{dbSNP_info}
 \description{
 
-\item{dbSNP_info()}{performs an annotation of a given list of SNPs searching information in dbSNP database belonging to NCBI}
+\bold{dbSNP_info()}performs an annotation of a given list of SNPs searching information in dbSNP database belonging to NCBI
 }
 
 \usage{
