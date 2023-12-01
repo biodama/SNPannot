@@ -12,8 +12,6 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
       if (!require(pck,character.only=T)) {
         install.packages(pck, type="source", dep=T, repos = "https://cran.r-project.org")
         library(pck,character.only=T)
-      }else{
-        library(pck,character.only=T)
       }
     }
     snp_info <- function(dat, build, type, r2, pop) {
@@ -60,7 +58,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
           thepage = "NO RESULT"
         }
       }
-      thepage
+      #thepage
       info <- thepage
       if (length(info) == 1) {
         table_info <- data.frame(term = dat[1, ], rsID = "",
@@ -147,8 +145,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
               check_functional <- info[grep("Functional Consequence",
                                             info)][i]
 
-              functional <- ifelse(length(check_functional) ==
-                                     0, 0, 1)
+              functional <- ifelse(is.na(check_functional) == T, 0, 1)
               res_snps[[i]] <- data.frame(rsID = rs,
                                           gene = paste(gene, collapse = ";"), func = functional,
                                           GRCh37 = chr_pos_37, GRCh38 = chr_pos_38,
@@ -411,12 +408,12 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
       if (i == length(dat))
         message("Done!")
     }
-    require(plyr)
+    #require(plyr)
     res_final <- ldply(res_for)
   }
   else {
     x_list <- as.list(dat)
-    require("parallel")
+    #require("parallel")
     numWorkers <- detectCores() - 1
     cl <- makeCluster(numWorkers)
     inicio_par <- Sys.time()
@@ -425,7 +422,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
     final_par <- Sys.time()
     final_par - inicio_par
     stopCluster(cl)
-    require(plyr)
+    #require(plyr)
     res_final <- ldply(res_par)
   }
   res_final
