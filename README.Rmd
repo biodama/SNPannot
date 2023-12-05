@@ -29,6 +29,7 @@ library("gridExtra")
 library("plotly")
 
 
+
 require(DT)
 require(formatR)
 require(waiter)
@@ -90,12 +91,11 @@ temp<-data.frame(temp)
 
 ```{r, eval=T,echo=F, tidy.opts=list(arrow=TRUE, indent=2),results='asis'}
 temp2<-dplyr::select(temp, rsID,effect_allele,
-                     other_allele,allelefrequency_effect,hm_source,hm_rsID,pos)
+                     other_allele,allelefrequency_effect,hm_source,hm_rsID,hm_chr,hm_pos,pos)
 
 colnames(temp2)<-c("rsID","effect-allele","other-allele","MAF",
-                   "hm-source","hm-rsID","Position")
-kable(temp2,align = "c", escape = F, booktabs = T, 
-      linesep = "",position="float_rigth")
+                   "hm-source","hm-rsID","hm-chr","hm-pos","Position")
+kable(temp2,align = "c", escape = F, booktabs = T,linesep = "",position="float_rigth",responsive=T)
 
 ```
 
@@ -127,13 +127,16 @@ genes_info1<-snp_gene(dat=snps_info,type="info",p=T)
 
 ```
 
-```{r, eval=T,echo=F, tidy.opts=list(arrow=TRUE, indent=2),results='asis'}
+```{r, eval=T,echo=F,tidy.opts=list(arrow=TRUE, indent=2),results='asis'}
+
+
+genes_info1$"GO_id"<-gsub(":","-",genes_info1$"GO_id")
 
 genes_info_1<-dplyr::select(genes_info1,"term","hgnc","entrez_id","gene_des","gene_type","refseq","also")
 genes_info_2<-dplyr::select(genes_info1,info,GO_id,GO_des)
-colnames(genes_info_1)<-c("term","hgnc","Entrez-id","gene-des","gene-type",
-                         "refseq","also")
-colnames(genes_info_2)<-c("info","GO-id","GO-des")
+colnames(genes_info_1)<-c("term","hgnc","Entrez-id","Gene-des","Gene-type",
+                         "Refseq","Also")
+colnames(genes_info_2)<-c("Info","GO-id","GO-des")
 
 kable(genes_info_1,align = "c", escape = F, booktabs = T,
       linesep = "",position="float_rigth")
@@ -142,6 +145,7 @@ term<-genes_info_1[,1]
 genes_info_2<-cbind(term,genes_info_2)
 kable(genes_info_2,align = "c", escape = F, booktabs = T,
       linesep = "",position="float_rigth")
+
 
 ```
 ## License

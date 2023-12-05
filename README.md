@@ -76,6 +76,12 @@ hm-source
 hm-rsID
 </th>
 <th style="text-align:center;">
+hm-chr
+</th>
+<th style="text-align:center;">
+hm-pos
+</th>
+<th style="text-align:center;">
 Position
 </th>
 </tr>
@@ -101,6 +107,12 @@ ENSEMBL
 rs10911251
 </td>
 <td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+183081194
+</td>
+<td style="text-align:center;">
 1:183081194
 </td>
 </tr>
@@ -122,6 +134,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs6687758
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+222164948
 </td>
 <td style="text-align:center;">
 1:222164948
@@ -147,6 +165,12 @@ ENSEMBL
 rs11903757
 </td>
 <td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+192587204
+</td>
+<td style="text-align:center;">
 2:192587204
 </td>
 </tr>
@@ -168,6 +192,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs10936599
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+169492101
 </td>
 <td style="text-align:center;">
 3:169492101
@@ -193,6 +223,12 @@ ENSEMBL
 rs647161
 </td>
 <td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+134499092
+</td>
+<td style="text-align:center;">
 5:134499092
 </td>
 </tr>
@@ -214,6 +250,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs1321311
+</td>
+<td style="text-align:center;">
+6
+</td>
+<td style="text-align:center;">
+36622900
 </td>
 <td style="text-align:center;">
 6:36622900
@@ -239,6 +281,12 @@ ENSEMBL
 rs16892766
 </td>
 <td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+117630683
+</td>
+<td style="text-align:center;">
 8:117630683
 </td>
 </tr>
@@ -260,6 +308,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs6983267
+</td>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+128413305
 </td>
 <td style="text-align:center;">
 8:128413305
@@ -285,6 +339,12 @@ ENSEMBL
 rs719725
 </td>
 <td style="text-align:center;">
+9
+</td>
+<td style="text-align:center;">
+6365683
+</td>
+<td style="text-align:center;">
 9:6365683
 </td>
 </tr>
@@ -306,6 +366,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs10795668
+</td>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+8701219
 </td>
 <td style="text-align:center;">
 10:8701219
@@ -331,6 +397,12 @@ ENSEMBL
 rs3824999
 </td>
 <td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+74345550
+</td>
+<td style="text-align:center;">
 11:74345550
 </td>
 </tr>
@@ -352,6 +424,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs3802842
+</td>
+<td style="text-align:center;">
+11
+</td>
+<td style="text-align:center;">
+111171709
 </td>
 <td style="text-align:center;">
 11:111171709
@@ -377,6 +455,12 @@ ENSEMBL
 rs10774214
 </td>
 <td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+4368352
+</td>
+<td style="text-align:center;">
 12:4368352
 </td>
 </tr>
@@ -398,6 +482,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs3217810
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+4388271
 </td>
 <td style="text-align:center;">
 12:4388271
@@ -423,6 +513,12 @@ ENSEMBL
 rs3217901
 </td>
 <td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+4405389
+</td>
+<td style="text-align:center;">
 12:4405389
 </td>
 </tr>
@@ -444,6 +540,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs7136702
+</td>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+50880216
 </td>
 <td style="text-align:center;">
 12:50880216
@@ -469,6 +571,12 @@ ENSEMBL
 rs59336
 </td>
 <td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+115116352
+</td>
+<td style="text-align:center;">
 12:115116352
 </td>
 </tr>
@@ -490,6 +598,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs1957636
+</td>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+54560018
 </td>
 <td style="text-align:center;">
 14:54410919
@@ -515,6 +629,12 @@ ENSEMBL
 rs4444235
 </td>
 <td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+54410919
+</td>
+<td style="text-align:center;">
 14:54560018
 </td>
 </tr>
@@ -536,6 +656,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs4779584
+</td>
+<td style="text-align:center;">
+15
+</td>
+<td style="text-align:center;">
+32994756
 </td>
 <td style="text-align:center;">
 15:32994756
@@ -561,6 +687,12 @@ ENSEMBL
 rs9929218
 </td>
 <td style="text-align:center;">
+16
+</td>
+<td style="text-align:center;">
+68820946
+</td>
+<td style="text-align:center;">
 16:68820946
 </td>
 </tr>
@@ -582,6 +714,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs4939827
+</td>
+<td style="text-align:center;">
+18
+</td>
+<td style="text-align:center;">
+46453463
 </td>
 <td style="text-align:center;">
 18:46453463
@@ -607,6 +745,12 @@ ENSEMBL
 rs10411210
 </td>
 <td style="text-align:center;">
+19
+</td>
+<td style="text-align:center;">
+33532300
+</td>
+<td style="text-align:center;">
 19:33532300
 </td>
 </tr>
@@ -628,6 +772,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs961253
+</td>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+6404281
 </td>
 <td style="text-align:center;">
 20:6404281
@@ -653,6 +803,12 @@ ENSEMBL
 rs4813802
 </td>
 <td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+6699595
+</td>
+<td style="text-align:center;">
 20:6699595
 </td>
 </tr>
@@ -676,6 +832,12 @@ ENSEMBL
 rs2423279
 </td>
 <td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+7812350
+</td>
+<td style="text-align:center;">
 20:7812350
 </td>
 </tr>
@@ -697,6 +859,12 @@ ENSEMBL
 </td>
 <td style="text-align:center;">
 rs4925386
+</td>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+60921044
 </td>
 <td style="text-align:center;">
 20:60921044
@@ -779,7 +947,6 @@ C\>A,G
 6:36655123
 </td>
 <td style="text-align:center;">
-rs9918353;rs9470358;rs7742159
 </td>
 </tr>
 <tr>
@@ -900,16 +1067,16 @@ hgnc
 Entrez-id
 </th>
 <th style="text-align:center;">
-gene-des
+Gene-des
 </th>
 <th style="text-align:center;">
-gene-type
+Gene-type
 </th>
 <th style="text-align:center;">
-refseq
+Refseq
 </th>
 <th style="text-align:center;">
-also
+Also
 </th>
 </tr>
 </thead>
@@ -1029,7 +1196,7 @@ CCND2-AS2
 term
 </th>
 <th style="text-align:center;">
-info
+Info
 </th>
 <th style="text-align:center;">
 GO-id
@@ -1069,7 +1236,7 @@ COLCA2
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-<GO:0005737>
+GO-0005737
 </td>
 <td style="text-align:center;">
 cytoplasm
@@ -1088,7 +1255,7 @@ colorectal cancer. Alternative splicing of this gene results in multiple
 transcript variants. \[provided by RefSeq, Nov 2014\]
 </td>
 <td style="text-align:center;">
-<GO:0016020;GO:0016021>
+GO-0016020;GO-0016021
 </td>
 <td style="text-align:center;">
 membrane;integral component of membrane
