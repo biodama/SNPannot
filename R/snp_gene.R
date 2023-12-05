@@ -1,38 +1,36 @@
-snp_gene<-function(dat=NULL,type=c("info","hgnc","entrezid"),p=F){
+snp_gene<-function(dat=NULL,type=c("info","hgnc","entrezid"),p=T){
 
 
   x<-dat[1]
 
   if(is.null(x)==T || is.null(type)==T){
-    stop("ERROR: INTRODUCE dat AND type TERMS")
+    stop("INTRODUCE dat AND type TERMS")
 
   }else{
-    pack<-c("ontologyIndex","ontologySimilarity")
+    pack<-c("ontologyIndex","ontologySimilarity","parallel","plyr","pbapply","svMisc")
 
     for(pck in pack){
       if (!require(pck,character.only=T)) {
         install.packages(pck)
-        library(pck,character.only=T)
-      }else{
         library(pck,character.only=T)
       }
     }
 
     search_gene<-function(dat,type){
 
-      if(type=="info"){
+      if(type=="info" || type=="hgnc"){
         gen<-dat
         url_check<-paste0("https://www.ncbi.nlm.nih.gov/gene?term=((",gen,"%5BGene%20Name%5D)%20AND%20Homo%20sapiens%5BOrganism%5D)%20AND%20",gen,"%5BPreferred%20Symbol%5D")
 
-      }
-      if(type=="hgnc"){
-        gen<-dat
-        url_check<-paste0("https://www.ncbi.nlm.nih.gov/gene?term=((",gen,"%5BGene%20Name%5D)%20AND%20Homo%20sapiens%5BOrganism%5D)%20AND%20",gen,"%5BPreferred%20Symbol%5D")
       }
       if(type=="entrezid"){
         gen<-dat
         url_check<-paste0("https://www.ncbi.nlm.nih.gov/gene?term=",gen,"%5Buid%5D")
       }
+      if (type!="info" & type!="hgnc" & type!="entrezid") {
+        stop("ERROR: INTRODUCE TYPE info, hgnc or entrezid")
+      }
+
 
 
       inicio<-Sys.time()
@@ -169,7 +167,7 @@ snp_gene<-function(dat=NULL,type=c("info","hgnc","entrezid"),p=F){
 
 
         table_info<-data.frame(term=gen,hgnc=hgnc,entrez_id=entrez_id,
-                               full_name=fulln,
+                               gene_des=fulln,
                                gene_type=genety,
                                refseq=refsta,
                                also=aka,
@@ -194,7 +192,8 @@ snp_gene<-function(dat=NULL,type=c("info","hgnc","entrezid"),p=F){
     if(type=="info"){
       dat<-unique(unlist(strsplit(dat$"gene",split=";")))
     }
-
+    dat<-na.omit(dat)
+    dat<-dat[which(nchar(dat)!=0)]
     for(i in 1:length(dat)){
       res_for[[i]]<-search_gene(dat=dat[i],type)
       svMisc::progress(i,length(dat))
@@ -202,36 +201,20 @@ snp_gene<-function(dat=NULL,type=c("info","hgnc","entrezid"),p=F){
       if (i == length(dat)) message("Done!")
     }
 
-
-
-    require(plyr)
     res_final<-ldply(res_for)
 
-  }
-
-
-
-  else{
+  }else{
     if(type=="info"){
       dat<-unique(unlist(strsplit(dat$"gene",split=";")))
-      x_list<-as.list(dat)
     }
-
-    x_list<-as.list(dat)
-    require("parallel")
+    dat<-na.omit(dat)
+    dat<-dat[which(nchar(dat)!=0)]
     numWorkers <- detectCores()-1
     cl <- makeCluster(numWorkers)
-    inicio_par<-Sys.time()
-    res_par<-parLapply(cl,x_list,search_gene,type=type)
-    final_par<-Sys.time()
-    final_par-inicio_par
+    res_par<-pblapply(dat,search_gene,type=type,cl=cl)
+    #res_par <- parLapply(cl, x_list, search_gene, type = type)
     stopCluster(cl)
-
-
-    require(plyr)
     res_final<-ldply(res_par)
-
-
 
   }
 

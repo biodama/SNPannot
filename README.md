@@ -42,7 +42,8 @@ This set of functions in package accesses data from:
 Searches the dbSNP database belonging to NCBI in order to annotate the
 genes belonging to that SNP. According to the SNP name or position, the
 function annotates the GRCh37, GRCh38 and also SNPs in linkage
-disequilibrium (LD).
+disequilibrium (LD)
+[1000Genomes:phase3](https://www.internationalgenome.org/data).
 
 ``` r
 library(SNPannot)
@@ -706,7 +707,7 @@ rs4925386
 
 ``` r
 # Searching for information on some SNPs
-res_loop <- dbSNP_info(dat = temp[5:10, 1], type = "rs", p = T, build = 37, r2 = 0.999,
+res_loop <- dbSNP_info(dat = temp[5:10, 1], type = "rs", p = T, build = 37, r2 = 0.99,
   pop = "EUR")
 ```
 
@@ -723,7 +724,7 @@ rsID
 Gene
 </th>
 <th style="text-align:center;">
-Func
+Alleles
 </th>
 <th style="text-align:center;">
 GRCh37
@@ -748,7 +749,7 @@ rs647161
 PITX1-AS1
 </td>
 <td style="text-align:center;">
-1
+C\>A,T
 </td>
 <td style="text-align:center;">
 5:134499092
@@ -769,7 +770,7 @@ rs1321311;rs59148954
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-1
+C\>A,G
 </td>
 <td style="text-align:center;">
 6:36622900
@@ -778,7 +779,7 @@ rs1321311;rs59148954
 6:36655123
 </td>
 <td style="text-align:center;">
-rs9918353;rs9470358
+rs9918353;rs9470358;rs7742159
 </td>
 </tr>
 <tr>
@@ -791,7 +792,7 @@ rs16892766;rs386541188;rs58713577
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-1
+A\>C
 </td>
 <td style="text-align:center;">
 8:117630683
@@ -813,7 +814,7 @@ rs6983267;rs61163584;rs17467153
 CASC8;CCAT2
 </td>
 <td style="text-align:center;">
-1
+G\>T
 </td>
 <td style="text-align:center;">
 8:128413305
@@ -834,7 +835,7 @@ rs719725
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-1
+A\>C,G,T
 </td>
 <td style="text-align:center;">
 9:6365683
@@ -856,7 +857,7 @@ rs10795668;rs60782192
 LOC105376400
 </td>
 <td style="text-align:center;">
-1
+G\>A
 </td>
 <td style="text-align:center;">
 10:8701219
@@ -899,7 +900,7 @@ hgnc
 Entrez-id
 </th>
 <th style="text-align:center;">
-full-name
+gene-des
 </th>
 <th style="text-align:center;">
 gene-type

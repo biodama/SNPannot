@@ -37,6 +37,7 @@ require(readxl)
 require(scales)
 
 
+
 require(ggforce)
 require(ontologyIndex)
 require(ontologySimilarity)
@@ -76,7 +77,7 @@ This set of functions in package accesses data from:
   
 ## Example 1
 ### **dbSNP_info()**
-Searches the dbSNP database belonging to NCBI in order to annotate the genes belonging to that SNP. According to the SNP name or position, the function annotates the GRCh37, GRCh38 and also SNPs in linkage disequilibrium (LD).
+Searches the dbSNP database belonging to NCBI in order to annotate the genes belonging to that SNP. According to the SNP name or position, the function annotates the GRCh37, GRCh38 and also SNPs in linkage disequilibrium (LD) [1000Genomes:phase3](https://www.internationalgenome.org/data).
 
 ```{r, eval=T,tidy=TRUE, tidy.opts=list(arrow=TRUE, indent=2)}
 library(SNPannot)
@@ -97,27 +98,18 @@ kable(temp2,align = "c", escape = F, booktabs = T,
       linesep = "",position="float_rigth")
 
 ```
+
 ```{r, eval=T,echo=T,warning=FALSE,message=FALSE,tidy=TRUE, tidy.opts=list(arrow=TRUE, indent=2)}
 # Searching for information on some SNPs
-res_loop<-dbSNP_info(dat=temp[5:10,1],type="rs",p=T,build=37,r2=0.999,pop="EUR")
+res_loop<-dbSNP_info(dat=temp[5:10,1],type="rs",p=T,build=37,r2=0.99,pop="EUR")
+
 ```
 
 ```{r, eval=T,echo=F, tidy.opts=list(arrow=TRUE, indent=2),results='asis'}
 
-colnames(res_loop)<-c("term","rsID","Gene","Func","GRCh37","GRCh38","rsLD")
+colnames(res_loop)<-c("term","rsID","Gene","Alleles","GRCh37","GRCh38","rsLD")
 kable(res_loop,align = "c", escape = F, booktabs = T,
       linesep = "",position="float_rigth",responsive=T)
-```
-
-```{r, eval=F,echo=F, tidy.opts=list(arrow=TRUE, indent=2),results='asis'}
-res_loop1<-dplyr::select(res_loop,"term","rsID","gene","func")
-res_loop2<-dplyr::select(res_loop,"term","GRCh37","GRCh38","rs_ld")
-colnames(res_loop1)<-c("term","rsID","Gene","Func")
-colnames(res_loop2)<-c("term","GRCh37","GRCh38","rsLD")
-kable(res_loop1,align = "c",full_width = T,
-      linesep = "",position="float_rigth") 
-kable(res_loop2,align = "c",full_width = T,
-      linesep = "",position="float_rigth") 
 ```
 
 
@@ -137,9 +129,9 @@ genes_info1<-snp_gene(dat=snps_info,type="info",p=T)
 
 ```{r, eval=T,echo=F, tidy.opts=list(arrow=TRUE, indent=2),results='asis'}
 
-genes_info_1<-dplyr::select(genes_info1,"term","hgnc","entrez_id","full_name","gene_type","refseq","also")
+genes_info_1<-dplyr::select(genes_info1,"term","hgnc","entrez_id","gene_des","gene_type","refseq","also")
 genes_info_2<-dplyr::select(genes_info1,info,GO_id,GO_des)
-colnames(genes_info_1)<-c("term","hgnc","Entrez-id","full-name","gene-type",
+colnames(genes_info_1)<-c("term","hgnc","Entrez-id","gene-des","gene-type",
                          "refseq","also")
 colnames(genes_info_2)<-c("info","GO-id","GO-des")
 

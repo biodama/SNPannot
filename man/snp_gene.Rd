@@ -37,7 +37,7 @@ a dataframe containing the following values:
 \item{term}{Entered term to search info}
 \item{hgnc}{Name provided by HGNC}
 \item{entrez_id}{HGNC identifier}
-\item{full_name}{Full name desciption}
+\item{gene_des}{Gene description}
 \item{gene_type}{Gene type}
 \item{refseq}{RefSeq status}
 \item{also}{Also known as}

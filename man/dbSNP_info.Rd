@@ -3,7 +3,7 @@
 \title{dbSNP_info}
 \description{
 
-\bold{dbSNP_info()}performs an annotation of a given list of SNPs searching information in dbSNP database belonging to NCBI
+\bold{dbSNP_info()} performs an annotation of a given list of SNPs searching information in dbSNP database belonging to NCBI
 }
 
 \usage{
@@ -40,7 +40,7 @@ a dataframe containing the following values:
 \item{term}{Entered term to annotate}
 \item{rsID}{Alternative names of the SNP}
 \item{gene}{Gene to which it belongs}
-\item{func}{Functional consequences. If the value returned is 1, it is an intergenic-variant}
+\item{alleles}{Alleles. Ref>Alt}
 \item{GRCh37,GRCh38}{Chromosome position in Build 37 and Build 38}
 \item{rs_ld}{SNPs in linkage disequilibrium}
 
