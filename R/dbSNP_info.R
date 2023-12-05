@@ -366,17 +366,22 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
           require(jsonlite)
           require(xml2)
           url1<-paste0("https://rest.ensembl.org/ld/human/",snp,"/1000GENOMES:phase_3:",pop)
-          ensembl_get <- try(GET(url1,content_type("application/json"),timeout(4)))
+          tryCatch({
+            ensembl_get <- GET(url1,content_type("application/json"),timeout(5))
+            if (ensembl_get$status_code != 200) {
+              rs_ld <- paste0(http_status(ensembl_get$status_code)$category,"-",ensembl_get$status_code)
+            }
+            if (ensembl_get$status_code == 200) {
+              stop_for_status(ensembl_get)
+              table_ld <- fromJSON(toJSON(content(ensembl_get)))
+              rs_ld <- unlist(table_ld$variation2[table_ld$r2 >= r2])
+              rs_ld
+            }
 
-          if (ensembl_get$status_code != 200) {
-            rs_ld <- paste0(http_status(ensembl_get$status_code)$category,"-",ensembl_get$status_code)
-          }
-          if (ensembl_get$status_code == 200) {
-            stop_for_status(ensembl_get)
-            table_ld <- fromJSON(toJSON(content(ensembl_get)))
-            rs_ld <- unlist(table_ld$variation2[table_ld$r2 >= r2])
-            rs_ld
-          }
+          }, error=function(e){
+            rs_ld="Connection_timed_out"})
+
+
         }
         res <- sapply(1:length(check), function(i) ld_search(snp = check[i],
                                                              r2 = r2, pop = pop))
