@@ -98,7 +98,7 @@ colnames(temp2)<-c("rsID","effect-allele","other-allele","MAF",
 kable(temp2,align = "c", escape = F, booktabs = T,linesep = "",position="float_rigth",responsive=T)
 
 ```
-
+ 
 ```{r, eval=T,echo=T,warning=FALSE,message=FALSE,tidy=TRUE, tidy.opts=list(arrow=TRUE, indent=2)}
 # Searching for information on some SNPs
 res_loop<-dbSNP_info(dat=temp[5:10,1],type="rs",p=T,build=37,r2=0.99,pop="EUR")

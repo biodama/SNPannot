@@ -947,6 +947,7 @@ C\>A,G
 6:36655123
 </td>
 <td style="text-align:center;">
+rs9918353;rs9470358;rs7742159
 </td>
 </tr>
 <tr>
@@ -1011,6 +1012,7 @@ A\>C,G,T
 9:6365683
 </td>
 <td style="text-align:center;">
+rs10975553;rs7020964;rs7022186;rs7875811;rs10975557;rs7875812
 </td>
 </tr>
 <tr>
@@ -1033,6 +1035,7 @@ G\>A
 10:8659256
 </td>
 <td style="text-align:center;">
+rs9733843;rs11255815
 </td>
 </tr>
 </tbody>
