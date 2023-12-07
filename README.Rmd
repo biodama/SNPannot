@@ -108,6 +108,7 @@ res_loop<-dbSNP_info(dat=temp[5:10,1],type="rs",p=T,build=37,r2=0.99,pop="EUR")
 ```{r, eval=T,echo=F, tidy.opts=list(arrow=TRUE, indent=2),results='asis'}
 
 colnames(res_loop)<-c("term","rsID","Gene","Alleles","GRCh37","GRCh38","rsLD")
+
 kable(res_loop,align = "c", escape = F, booktabs = T,
       linesep = "",position="float_rigth",responsive=T)
 ```
