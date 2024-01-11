@@ -1,32 +1,33 @@
 dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
-                      r2 = 0.99, pop = "EUR"){
-
+                      r2 = 0.99, pop = "EUR")
+{
   if (is.null(dat) == T || is.null(type) == T) {
     stop("INTRODUCE dat AND type TERMS")
   }
   else {
-    pack<-c("R.utils","plyr","parallel","svMisc","httr","jsonlite","xml2","pbapply")
-    for(pck in pack){
-      if (!require(pck,character.only=T)) {
-        install.packages(pck, type="source", dep=T, repos = "https://cran.r-project.org")
-        library(pck,character.only=T)
+    pack <- c("R.utils", "plyr", "parallel", "svMisc", "httr",
+              "jsonlite", "xml2", "pbapply")
+    for (pck in pack) {
+      if (!require(pck, character.only = T)) {
+        install.packages(pck, type = "source", dep = T,
+                         repos = "https://cran.r-project.org")
+        library(pck, character.only = T)
       }
     }
     snp_info <- function(dat, build, type, r2, pop) {
-      if (class(dat) != "character" ) {
+      if (class(dat) != "character") {
         stop("INTRODUCE A CHARACTER VECTOR")
       }
-      if (type!="pos" & type!="rs"){
+      if (type != "pos" & type != "rs") {
         stop("INTRODUCE TYPE rs OR pos")
       }
-
       if (type == "pos") {
         if (length(grep(":", dat)) == 0) {
           stop("INTRODUCE THE POSITION DATA SEPARATE WITH : AND WITHOUT CHR")
         }
         else {
           if (length(grep("chr", dat)) > 0) {
-            dat<- gsub("chr", "", dat)
+            dat <- gsub("chr", "", dat)
           }
           tp <- unlist(strsplit(dat, split = ":"))
           url_check <- paste0("https://www.ncbi.nlm.nih.gov/snp/?term=",
@@ -67,7 +68,7 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
         table_info <- data.frame(term = dat, rsID = "",
                                  gene = "", alleles = "", GRCh37 = "", GRCh38 = "",
                                  rs_ld = "", stringsAsFactors = F)
-        table_info
+        #table_info
       }
       else {
         if (length(info) > 1) {
@@ -145,8 +146,9 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
                                                         info)][i], split = "style=\"background-color:\">"))[2]
                 chr_pos_38 <- gsub("</span>", "", chr_pos_38)
               }
-
-              al<-unlist(strsplit(unlist(strsplit(info[grep("Alleles:",info)],split = "Alleles:</dt><dd><span>"))[2],split="</span><span"))[1]
+              al <- unlist(strsplit(unlist(strsplit(info[grep("Alleles:",
+                                                              info)], split = "Alleles:</dt><dd><span>"))[2],
+                                    split = "</span><span"))[1]
               res_snps[[i]] <- data.frame(rsID = rs,
                                           gene = paste(gene, collapse = ";"), alleles = al,
                                           GRCh37 = chr_pos_37, GRCh38 = chr_pos_38,
@@ -205,9 +207,9 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
                                                       info)], split = "style=\"background-color:\">"))[2]
               chr_pos_38 <- gsub("</span>", "", chr_pos_38)
             }
-
-            al<-unlist(strsplit(unlist(strsplit(info[grep("Alleles:",info)],split = "Alleles:</dt><dd><span>"))[2],split="</span><span"))[1]
-
+            al <- unlist(strsplit(unlist(strsplit(info[grep("Alleles:",
+                                                            info)], split = "Alleles:</dt><dd><span>"))[2],
+                                  split = "</span><span"))[1]
             table_info <- data.frame(rsID = rs, gene = paste(gene,
                                                              collapse = ";"), alleles = al, GRCh37 = chr_pos_37,
                                      GRCh38 = chr_pos_38, stringsAsFactors = F)
@@ -217,202 +219,238 @@ dbSNP_info<-function (dat = NULL, type = c("pos", "rs"), p = F, build = 37,
         table_info
         check <- dat
         if (type == "pos" & build == 37) {
-          table_info <- table_info[which(table_info$GRCh37 %in%
-                                           check), ]
-          if (length(setdiff(table_info$GRCh38, table_info$GRCh38[1])) ==
-              0) {
-            pos38 <- table_info$GRCh38[1]
-          }
-          else {
-            vec <- setdiff(table_info$GRCh38, table_info$GRCh38[1])
-            pos38 <- paste(table_info$GRCh38[1], paste(vec,
+          table_info <- table_info[which(table_info$GRCh37 %in% check), ]
+          if(dim(table_info)[1]==0){
+            table_info <- data.frame(term = dat, rsID = "",
+                                     gene = "", alleles = "", GRCh37 = "", GRCh38 = "",
+                                     rs_ld = "", stringsAsFactors = F)
+            table_info
+          }else{
+
+            if (length(setdiff(table_info$GRCh38, table_info$GRCh38[1])) ==
+                0) {
+              pos38 <- table_info$GRCh38[1]
+            }
+            else {
+              vec <- setdiff(table_info$GRCh38, table_info$GRCh38[1])
+              pos38 <- paste(table_info$GRCh38[1], paste(vec,
+                                                         collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$alleles, table_info$alleles[1])) ==
+                0) {
+              alls <- table_info$alleles[1]
+            }
+            else {
+              vec <- setdiff(table_info$alleles, table_info$alleles[1])
+              alls <- paste(table_info$alleles[1], paste(vec,
+                                                         collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$gene, table_info$gene[1])) ==
+                0) {
+              gene2 <- table_info$gene[1]
+            }
+            else {
+              vec <- setdiff(table_info$gene, table_info$gene[1])
+              gene2 <- paste(table_info$gene[1], paste(vec,
                                                        collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$rsID, table_info$rsID[1])) ==
+                0) {
+              snp2 <- table_info$rsID[1]
+            }
+            else {
+              vec <- setdiff(table_info$rsID, table_info$rsID[1])
+              snp2 <- paste(table_info$rsID[1], paste(vec,
+                                                      collapse = ";"), sep = ";")
+            }
+            table_info <- data.frame(term = check, rsID = snp2,
+                                     gene = gene2, alleles = alls, GRCh37 = check,
+                                     GRCh38 = pos38, stringsAsFactors = F)
           }
-          if (length(setdiff(table_info$alleles, table_info$alleles[1])) ==
-              0) {
-            alls <- table_info$alleles[1]
-          }
-          else {
-            vec <- setdiff(table_info$alleles, table_info$alleles[1])
-            alls <- paste(table_info$alleles[1], paste(vec,
-                                                       collapse = ";"), sep = ";")
-          }
-          if (length(setdiff(table_info$gene, table_info$gene[1])) ==
-              0) {
-            gene2 <- table_info$gene[1]
-          }
-          else {
-            vec <- setdiff(table_info$gene, table_info$gene[1])
-            gene2 <- paste(table_info$gene[1], paste(vec,
-                                                     collapse = ";"), sep = ";")
-          }
-          if (length(setdiff(table_info$rsID, table_info$rsID[1])) ==
-              0) {
-            snp2 <- table_info$rsID[1]
-          }
-          else {
-            vec <- setdiff(table_info$rsID, table_info$rsID[1])
-            snp2 <- paste(table_info$rsID[1], paste(vec,
-                                                    collapse = ";"), sep = ";")
-          }
-          table_info <- data.frame(term = check, rsID = snp2,
-                                   gene = gene2, alleles = alls, GRCh37 = check,
-                                   GRCh38 = pos38, stringsAsFactors = F)
         }
         if (type == "pos" & build == 38) {
           table_info <- table_info[which(table_info$GRCh38 %in%
                                            check), ]
-          if (length(setdiff(table_info$GRCh37, table_info$GRCh37[1])) ==
-              0) {
-            pos37 <- table_info$GRCh37[1]
-          }
-          else {
-            vec <- setdiff(table_info$GRCh37, table_info$GRCh37[1])
-            pos37 <- paste(table_info$GRCh37[1], paste(vec,
-                                                       collapse = ";"), sep = ";")
-          }
-          if (length(setdiff(table_info$alleles, table_info$alleles[1])) ==
-              0) {
-            alls <- table_info$alleles[1]
-          }
-          else {
-            vec <- setdiff(table_info$alleles, table_info$alleles[1])
-            alls <- paste(table_info$alleles[1], paste(vec,
-                                                       collapse = ";"), sep = ";")
-          }
-          if (length(setdiff(table_info$gene, table_info$gene[1])) ==
-              0) {
-            gene2 <- table_info$gene[1]
-          }
-          else {
-            vec <- setdiff(table_info$gene, table_info$gene[1])
-            gene2 <- paste(table_info$gene[1], paste(vec,
-                                                     collapse = ";"), sep = ";")
-          }
-          if (length(setdiff(table_info$rsID, table_info$rsID[1])) ==
-              0) {
-            snp2 <- table_info$rsID[1]
-          }
-          else {
-            vec <- setdiff(table_info$rsID, table_info$rsID[1])
-            snp2 <- paste(table_info$rsID[1], paste(vec,
-                                                    collapse = ";"), sep = ";")
-          }
-          table_info <- data.frame(term = check, rsID = snp2,
-                                   gene = gene2, alleles = alls, GRCh37 = pos37,
-                                   GRCh38 = check, stringsAsFactors = F)
-        }
-        else{
-          if (length(setdiff(table_info$GRCh37, table_info$GRCh37[1])) ==
-              0) {
-            pos37 <- table_info$GRCh37[1]
-          }
-          else {
-            vec <- setdiff(table_info$GRCh37, table_info$GRCh37[1])
-            pos37 <- paste(table_info$GRCh37[1], paste(vec,
-                                                       collapse = ";"), sep = ";")
-          }
-          if (length(setdiff(table_info$alleles, table_info$alleles[1])) ==
-              0) {
-            alls <- table_info$alleles[1]
-          }
-          else {
-            vec <- setdiff(table_info$alleles, table_info$alleles[1])
-            alls <- paste(table_info$alleles[1], paste(vec,
-                                                       collapse = ";"), sep = ";")
-          }
+          if(dim(table_info)[1]==0){
+            table_info <- data.frame(term = dat, rsID = "",
+                                     gene = "", alleles = "", GRCh37 = "", GRCh38 = "",
+                                     rs_ld = "", stringsAsFactors = F)
 
-          if (length(setdiff(table_info$gene, table_info$gene[1])) ==
-              0) {
-            gene2 <- table_info$gene[1]
-          }
-          else {
-            vec <- setdiff(table_info$gene, table_info$gene[1])
-            gene2 <- paste(table_info$gene[1], paste(vec,
-                                                     collapse = ";"), sep = ";")
-          }
-          if (length(setdiff(table_info$GRCh38, table_info$GRCh38[1])) ==
-              0) {
-            pos38 <- table_info$GRCh38[1]
-          }
-          else {
-            vec <- setdiff(table_info$GRCh38, table_info$GRCh38[1])
-            pos38 <- paste(table_info$GRCh38[1], paste(vec,
-                                                       collapse = ";"), sep = ";")
-          }
-          if (length(setdiff(table_info$rsID, table_info$rsID[1])) ==
-              0) {
-            snp2 <- table_info$rsID[1]
-          }
-          else {
-            vec <- setdiff(table_info$rsID, table_info$rsID[1])
-            snp2 <- paste(table_info$rsID[1], paste(vec,
-                                                    collapse = ";"), sep = ";")
-          }
-          table_info <- data.frame(term = check, rsID = snp2,
-                                   gene = gene2, alleles=alls, GRCh37 = pos37,
-                                   GRCh38 = pos38, stringsAsFactors = F)
-        }
-        table_info
-        if (type == "pos") {
-          snps_search <- table_info$rsID
-        }
-        else {
-          snps_search <- table_info$term
-        }
-        check <- unlist(strsplit(snps_search, split = ";"))[1]
-        ld_search <- function(snp, r2, pop) {
-          require(httr)
-          require(jsonlite)
-          require(xml2)
-          url1<-paste0("https://rest.ensembl.org/ld/human/",snp,"/1000GENOMES:phase_3:",pop)
-          tryCatch({
-            ensembl_get <- GET(url1,content_type("application/json"),timeout(5))
-            if (ensembl_get$status_code != 200) {
-              rs_ld <- paste0(http_status(ensembl_get$status_code)$category,"-",ensembl_get$status_code)
+          }else{
+            if (length(setdiff(table_info$GRCh37, table_info$GRCh37[1])) ==
+                0) {
+              pos37 <- table_info$GRCh37[1]
             }
-            if (ensembl_get$status_code == 200) {
-              stop_for_status(ensembl_get)
-              table_ld <- fromJSON(toJSON(content(ensembl_get)))
-              rs_ld <- unlist(table_ld$variation2[table_ld$r2 >= r2])
-              rs_ld
+            else {
+              vec <- setdiff(table_info$GRCh37, table_info$GRCh37[1])
+              pos37 <- paste(table_info$GRCh37[1], paste(vec,
+                                                         collapse = ";"), sep = ";")
             }
+            if (length(setdiff(table_info$alleles, table_info$alleles[1])) ==
+                0) {
+              alls <- table_info$alleles[1]
+            }
+            else {
+              vec <- setdiff(table_info$alleles, table_info$alleles[1])
+              alls <- paste(table_info$alleles[1], paste(vec,
+                                                         collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$gene, table_info$gene[1])) ==
+                0) {
+              gene2 <- table_info$gene[1]
+            }
+            else {
+              vec <- setdiff(table_info$gene, table_info$gene[1])
+              gene2 <- paste(table_info$gene[1], paste(vec,
+                                                       collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$rsID, table_info$rsID[1])) ==
+                0) {
+              snp2 <- table_info$rsID[1]
+            }
+            else {
+              vec <- setdiff(table_info$rsID, table_info$rsID[1])
+              snp2 <- paste(table_info$rsID[1], paste(vec,
+                                                      collapse = ";"), sep = ";")
+            }
+            table_info <- data.frame(term = check, rsID = snp2,
+                                     gene = gene2, alleles = alls, GRCh37 = pos37,
+                                     GRCh38 = check, stringsAsFactors = F)
+          }
+        }
+        if(type == "rs"){
+          if(dim(table_info)[1]==0){
+            table_info <- data.frame(term = dat, rsID = "",
+                                     gene = "", alleles = "", GRCh37 = "", GRCh38 = "",
+                                     rs_ld = "", stringsAsFactors = F)
 
-          }, error=function(e){
-            rs_ld="Connection_timed_out"})
+          }else{
+            if (length(setdiff(table_info$GRCh37, table_info$GRCh37[1])) ==
+                0) {
+              pos37 <- table_info$GRCh37[1]
+            }
+            else {
+              vec <- setdiff(table_info$GRCh37, table_info$GRCh37[1])
+              pos37 <- paste(table_info$GRCh37[1], paste(vec,
+                                                         collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$alleles, table_info$alleles[1])) ==
+                0) {
+              alls <- table_info$alleles[1]
+            }
+            else {
+              vec <- setdiff(table_info$alleles, table_info$alleles[1])
+              alls <- paste(table_info$alleles[1], paste(vec,
+                                                         collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$gene, table_info$gene[1])) ==
+                0) {
+              gene2 <- table_info$gene[1]
+            }
+            else {
+              vec <- setdiff(table_info$gene, table_info$gene[1])
+              gene2 <- paste(table_info$gene[1], paste(vec,
+                                                       collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$GRCh38, table_info$GRCh38[1])) ==
+                0) {
+              pos38 <- table_info$GRCh38[1]
+            }
+            else {
+              vec <- setdiff(table_info$GRCh38, table_info$GRCh38[1])
+              pos38 <- paste(table_info$GRCh38[1], paste(vec,
+                                                         collapse = ";"), sep = ";")
+            }
+            if (length(setdiff(table_info$rsID, table_info$rsID[1])) ==
+                0) {
+              snp2 <- table_info$rsID[1]
+            }
+            else {
+              vec <- setdiff(table_info$rsID, table_info$rsID[1])
+              snp2 <- paste(table_info$rsID[1], paste(vec,
+                                                      collapse = ";"), sep = ";")
+            }
+            table_info <- data.frame(term = check, rsID = snp2,
+                                     gene = gene2, alleles = alls, GRCh37 = pos37,
+                                     GRCh38 = pos38, stringsAsFactors = F)
 
+          }
+        }
+        if(dim(table_info)[1]==0){
+          table_info <- data.frame(term = dat, rsID = "",
+                                   gene = "", alleles = "", GRCh37 = "", GRCh38 = "",
+                                   rs_ld = "", stringsAsFactors = F)
+
+        }else{
+          if (type == "pos") {
+            snps_search <- table_info$rsID
+          }
+          else {
+            snps_search <- table_info$term
+          }
+          check <- unlist(strsplit(snps_search, split = ";"))[1]
+          ld_search <- function(snp, r2, pop) {
+            require(httr)
+            require(jsonlite)
+            require(xml2)
+            url1 <- paste0("https://rest.ensembl.org/ld/human/",
+                           snp, "/1000GENOMES:phase_3:", pop)
+            tryCatch({
+              ensembl_get <- GET(url1, content_type("application/json"),
+                                 timeout(5))
+              if (ensembl_get$status_code != 200) {
+                rs_ld <- paste0(http_status(ensembl_get$status_code)$category,
+                                "-", ensembl_get$status_code)
+              }
+              if (ensembl_get$status_code == 200) {
+                stop_for_status(ensembl_get)
+                table_ld <- fromJSON(toJSON(content(ensembl_get)))
+                rs_ld <- unlist(table_ld$variation2[table_ld$r2 >=
+                                                      r2])
+                rs_ld
+              }
+            }, error = function(e) {
+              rs_ld = "Connection_timed_out"
+            })
+          }
+          res <- sapply(1:length(check), function(i) ld_search(snp = check[i],
+                                                               r2 = r2, pop = pop))
+          res_new <- paste(unique(unlist(res)), collapse = ";")
+          table_info$rs_ld <- res_new
+          table_info$gene<-trimws(table_info$gene, which = "right", whitespace = "\\;")
+
+
+
+          table_info
 
         }
-        res <- sapply(1:length(check), function(i) ld_search(snp = check[i],
-                                                             r2 = r2, pop = pop))
-        res_new <- paste(unique(unlist(res)), collapse = ";")
-        table_info$rs_ld <- res_new
-        table_info
       }
     }
   }
   if (p == F) {
     res_for <- list()
-    dat<-na.omit(dat)
-    dat<-dat[which(nchar(dat)!=0)]
+    dat <- na.omit(dat)
+    dat <- dat[which(nchar(dat) != 0)]
     for (i in 1:length(dat)) {
-      res_for[[i]] <- snp_info(dat = dat[i], build, type, r2, pop)
+      res_for[[i]] <- snp_info(dat = dat[i], build, type,
+                               r2, pop)
       svMisc::progress(i, max.value = length(dat))
       Sys.sleep(0.02)
-      if (i == length(dat)){message("Done!")}
+      if (i == length(dat)) {
+        message("Done!")
+      }
     }
     res_final <- ldply(res_for)
   }
   else {
-    dat<-na.omit(dat)
-    dat<-dat[which(nchar(dat)!=0)]
+    dat <- na.omit(dat)
+    dat <- dat[which(nchar(dat) != 0)]
     numWorkers <- detectCores() - 1
     cl <- makeCluster(numWorkers)
-    #res_par <- parLapply(cl, x_list, snp_info, build = build, type = type, r2 = r2, pop = pop)
-    res_par <- pblapply(dat, snp_info, build = build, type = type, r2 = r2, pop = pop,cl=cl)
+    res_par <- pblapply(dat, snp_info, build = build, type = type,
+                        r2 = r2, pop = pop, cl = cl)
     stopCluster(cl)
     res_final <- ldply(res_par)
   }
   res_final
-
 }
